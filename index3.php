@@ -9,7 +9,7 @@
 
 	<?php 
 	include('conn.php');
-	$session_id = 3;
+	$session_id = 4;
 
 	$query = "SELECT chat_id FROM chat_members WHERE user_id = '$session_id' ";
 	$result = mysql_query($query);	
@@ -31,7 +31,7 @@
 
 	?>
 	<div id="textchat">
-	<div class="username">User : Narendar</div>		
+		<div class="username">User : Vijay</div>
 		<div id="user2" class="users" userId = "1">
 			BOOMI <?php 
 
@@ -82,31 +82,35 @@
 
 			
 		</div>
-		
-		<div id="user4" class="users" userId = "4">
-			Vijay <?php 
+		<div id="user3" class="users" userId = "3">
+			Narendar <?php 
 
-			if(!in_array(4,$user_ids)){
-				echo '<button class="btn" onclick="invite(3)" id="btn_4">Invite</button>';					
+			if(!in_array(3,$user_ids)){
+				echo '<button class="btn" onclick="invite(3)" id="btn_3">Invite</button>';					
 			} else{				
 
-				$query = "SELECT status,chat_id FROM chat_members WHERE chat_id IN ($chat_ids) AND user_id = '4'";
+				$query = "SELECT status,chat_id FROM chat_members WHERE chat_id IN ($chat_ids) AND user_id = '3'";
 				$result = mysql_query($query);
-				$rows = mysql_fetch_array($result);
-				
+				$rows = mysql_fetch_array($result);				
+
 				if($rows['status'] == 0){
-					echo '<button class="btn" onclick="invite(4)" id="btn_4">Invite</button>'; 							
+					echo '<button class="btn" onclick="invite(3)" id="btn_3">Invite</button>'; 							
 				}else if($rows['status'] == 1){
 					echo '<button class="btn" >Invited</button>'; 				
 				}else if($rows['status'] == 2){
-					echo '<button class="btn" onclick="approve(4,'.$rows['chat_id'].')" id="btn_4">Approve</button>'; 				
+					echo '<button class="btn" onclick="approve(3,'.$rows['chat_id'].')" id="btn_3">Approve</button>'; 				
 				}else{
-					echo '<button class="btn"  id="btn_4">Connected</button>'; 	
+					echo '<button class="btn"  id="btn_3">Connected</button>'; 	
 				}
 			} 
-			
+
+
+
+			 
+
 			?>
-		</div>		
+		</div> 
+			
 		<br><br>
 		<p id="history"></p>
 		<form>
@@ -121,16 +125,15 @@
 	<script type="text/javascript">
 		function invite(user_id){
 			$('#btn_'+user_id).text('Please wait . . ');
-			$.post('invite.php',{session_id:2,user_id:user_id},function(res){
-				$('#btn_'+user_id).text('Invited');
-			
+			$.post('invite.php',{session_id:4,user_id:user_id},function(res){
+				$('#btn_'+user_id).text('Invited');				
 				
 			});
 		}
 		function approve(user_id,chat_id){
 			$('#btn_'+user_id).text('Please wait . . ');
 			$.post('approve.php',{chat_id:chat_id,user_id:user_id},function(res){
-				$('#btn_'+user_id).text('Connected');	
+				$('#btn_'+user_id).text('Connected');			
 				
 			});
 		}

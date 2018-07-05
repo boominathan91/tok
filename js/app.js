@@ -1,20 +1,55 @@
 /* global API_KEY TOKEN SESSION_ID SAMPLE_SERVER_BASE_URL OT */
 /* eslint-disable no-alert */
 
- $.get('session.php',function(res){   
-       initializeSession(res);
-  }); 
+ // $.get('session.php',function(res){   
+ //       initializeSession(res);
+ //  }); 
+function invite(user_id){
+      $('#btn_'+user_id).text('Please wait . . ');
+      $.post('invite.php',{session_id:1,user_id:user_id},function(res){
+        $('#btn_'+user_id).text('Invited'); 
+         initializeSession(res);        
+        
+      });
+    }
+    function approve(user_id,chat_id){
+      $('#btn_'+user_id).text('Please wait . . ');
+      $.post('approve.php',{chat_id:chat_id,user_id:user_id},function(res){
+        $('#btn_'+user_id).text('Connected');
+        initializeSession(res);       
+      });
+    }
+
+
+    $('.users').click(function(){
+      var user_id = $(this).attr('userId');
+      $('.users').removeClass('active');
+      $(this).addClass('active');
+      // $.post('session.php',{user_id:user_id},function(res){
+      //  console.log(res);
+      // });
+
+    });
+
+
+var apiKey;
+var session;
+var sessionId;
+var token;
+
 
 
 function initializeSession(data) {
+  // console.log(data);
 
   var obj = jQuery.parseJSON(data); 
-  var apiKey = obj.apiKey;
-  var sessionId = obj.session;
-  var token = obj.token;
+   // console.log(obj);
+   apiKey = obj.apiKey;  
+   sessionId = obj.session;
+  token = obj.token;
 
     
-  //console.log(apiKey);
+  console.log(apiKey);
   session = OT.initSession(apiKey, sessionId); 
 
   // Connect to the session

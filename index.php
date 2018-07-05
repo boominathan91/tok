@@ -31,9 +31,7 @@
 
 	?>
 	<div id="textchat">
-		<!-- <div id="user1" class="users" userId = "1">
-			Boomi  <?php echo (!in_array(1,$user_ids))?'<button class="btn" onclick="invite(1)" id="btn_1">Invite</button>':'<span id="btn_1"></span>'; ?>
-		</div> -->
+		<div class="username">User : Boomi</div>
 		<div id="user2" class="users" userId = "2">
 			Siva <?php 
 
@@ -121,40 +119,8 @@
 
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>	
 	<script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
-	<!-- <script type="text/javascript" src="js/app.js"></script> -->
-	<script type="text/javascript">
-		function invite(user_id){
-			$('#btn_'+user_id).text('Please wait . . ');
-			$.post('invite.php',{session_id:1,user_id:user_id},function(res){
-				$('#btn_'+user_id).text('Invited');
-				setTimeout(function() {
-					$('#btn_'+user_id).remove();	
-				}, 2000);
-				
-			});
-		}
-		function approve(user_id,chat_id){
-			$('#btn_'+user_id).text('Please wait . . ');
-			$.post('approve.php',{chat_id:chat_id,user_id:user_id},function(res){
-				$('#btn_'+user_id).text('Connected');
-				setTimeout(function() {
-					$('#btn_'+user_id).remove();	
-				}, 2000);
-				
-			});
-		}
-
-
-		$('.users').click(function(){
-			var user_id = $(this).attr('userId');
-			$('.users').removeClass('active');
-			$(this).addClass('active');
-			// $.post('session.php',{user_id:user_id},function(res){
-			// 	console.log(res);
-			// });
-
-		});
-	</script>
+	<script type="text/javascript" src="js/app.js"></script>
+	
 </body>
 </html>
 

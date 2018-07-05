@@ -9,7 +9,7 @@
 
 	<?php 
 	include('conn.php');
-	$session_id = 1;
+	$session_id = 2;
 
 	$query = "SELECT chat_id FROM chat_members WHERE user_id = '$session_id' ";
 	$result = mysql_query($query);	
@@ -31,14 +31,13 @@
 
 	?>
 	<div id="textchat">
-		<!-- <div id="user1" class="users" userId = "1">
-			Boomi  <?php echo (!in_array(1,$user_ids))?'<button class="btn" onclick="invite(1)" id="btn_1">Invite</button>':'<span id="btn_1"></span>'; ?>
-		</div> -->
+		<div class="username">User : Sivamani</div>
+
 		<div id="user2" class="users" userId = "1">
 			BOOMI <?php 
 
 			if(!in_array(1,$user_ids)){
-				echo '<button class="btn" onclick="invite(1)" id="btn_2">Invite</button>';					
+				echo '<button class="btn" onclick="invite(1)" id="btn_1">Invite</button>';					
 			} else{				
 
 				$query = "SELECT status,chat_id FROM chat_members WHERE chat_id IN ($chat_ids) AND user_id = '1'";
@@ -91,7 +90,7 @@
 			Vijay <?php 
 
 			if(!in_array(4,$user_ids)){
-				echo '<button class="btn" onclick="invite(3)" id="btn_3">Invite</button>';					
+				echo '<button class="btn" onclick="invite(3)" id="btn_4">Invite</button>';					
 			} else{				
 
 				$query = "SELECT status,chat_id FROM chat_members WHERE chat_id IN ($chat_ids) AND user_id = '4'";
@@ -127,19 +126,15 @@
 			$('#btn_'+user_id).text('Please wait . . ');
 			$.post('invite.php',{session_id:2,user_id:user_id},function(res){
 				$('#btn_'+user_id).text('Invited');
-				setTimeout(function() {
-					$('#btn_'+user_id).remove();	
-				}, 2000);
+				initializeSession(res);			
 				
 			});
 		}
 		function approve(user_id,chat_id){
 			$('#btn_'+user_id).text('Please wait . . ');
 			$.post('approve.php',{chat_id:chat_id,user_id:user_id},function(res){
-				$('#btn_'+user_id).text('Connected');
-				setTimeout(function() {
-					$('#btn_'+user_id).remove();	
-				}, 2000);
+				$('#btn_'+user_id).text('Connected');	
+				initializeSession(res);	
 				
 			});
 		}

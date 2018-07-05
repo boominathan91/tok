@@ -42,15 +42,27 @@ if(!empty($_POST['user_id'])){
 		$insert_id = mysql_insert_id();
 
 		$session_user_id = $_POST['session_id'];
+		$token['apiKey'] ='46145352';
+		$token['session_id'] = $session_id;
 
 		$query = "INSERT chat_members (`chat_id`,`user_id`) VALUES ('$insert_id','$user_id')";
 		$result = mysql_query($query);
-		$query = "INSERT chat_members (`chat_id`,`user_id`,`status`) VALUES ('$insert_id','$session_user_id','0')";
+		$query = "INSERT chat_members (`chat_id`,`user_id`,`status`) VALUES ('$insert_id','$session_user_id','2')";
 		$result = mysql_query($query) or mysql_error();
+
+		// Replace with meaningful metadata for the connection:
+	$connectionMetaData = "username=Boomi,user_id=1";
+
+		// Replace with the correct session ID:
+		$token['token']  = $opentok->generateToken($token['session_id'],array('expireTime' => time()+(7 * 24 * 60 * 60), 'data' =>  $connectionMetaData));
+
+
 		
 	}
 
-	echo json_encode(array('status'=>$result));
+
+
+	echo json_encode($token);
 
 
 
